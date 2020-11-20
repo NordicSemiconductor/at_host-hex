@@ -1,0 +1,26 @@
+name: Build
+
+on: push
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        board: [thingy91_nrf9160ns, nrf9160dk_nrf9160ns]
+    steps:
+      - run: git clone https://github.com/nrfconnect/sdk-nrf nrf
+      - name: Build AT client sample
+        run: |
+          docker run --rm -v ${PWD}/nrf:/workdir/ncs/nrf \
+            coderbyheart/fw-nrfconnect-nrf-docker \
+            /bin/bash -c 'cd ncs/nrf/samples/nrf9160/at_client && west build -p always -b ${{ matrix.board }}'
+          cp build/zephyr/merged.hex at_client-${{ matrix.board }}.hex
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.board }}
+          path: |
+            at_client-*.hex
