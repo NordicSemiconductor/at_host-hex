@@ -1,5 +1,5 @@
 {
   "extends": [
-    "github>bifravst/code-style"
+    "github>nordicsemiconductor/asset-tracker-cloud-code-style-js"
   ]
 }
