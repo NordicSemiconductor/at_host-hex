@@ -9,7 +9,7 @@ Compile the AT client sample for 9160DK and Thingy:91 and publish it regularly.
 - [`thingy91_nrf9160ns`](https://nordicsemiconductor.github.io/at_client-hex/at_client-thingy91_nrf9160ns-master.hex)
 - [`nrf9160dk_nrf9160ns`](https://nordicsemiconductor.github.io/at_client-hex/at_client-nrf9160dk_nrf9160ns-master.hex)
 
-## v1.4-branch
+## v1.5 branch
 
-- [`thingy91_nrf9160ns`](https://nordicsemiconductor.github.io/at_client-hex/at_client-thingy91_nrf9160ns-v1.4-branch.hex)
-- [`nrf9160dk_nrf9160ns`](https://nordicsemiconductor.github.io/at_client-hex/at_client-nrf9160dk_nrf9160ns-v1.4-branch.hex)
+- [`thingy91_nrf9160ns`](https://nordicsemiconductor.github.io/at_client-hex/at_client-thingy91_nrf9160ns-v1.5-branch.hex)
+- [`nrf9160dk_nrf9160ns`](https://nordicsemiconductor.github.io/at_client-hex/at_client-nrf9160dk_nrf9160ns-v1.5-branch.hex)
