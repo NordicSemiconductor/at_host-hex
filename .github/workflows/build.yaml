@@ -27,7 +27,7 @@ jobs:
           cp nrf/samples/nrf9160/at_client/build/zephyr/merged.hex build/at_client-${{ matrix.board }}.hex
       - uses: actions/upload-artifact@v2
         with:
-          name: at_client-${{ matrix.board }}
+          name: at_client-${{ matrix.board }}-${{ github.sha }}
           path: |
             build/at_client-*.hex
 
