@@ -18,7 +18,7 @@ jobs:
     steps:
       - run: git clone --single-branch --branch ${{ matrix.branch }} https://github.com/nrfconnect/sdk-nrf nrf
       - run: mkdir build
-      - run: echo "SPM_MIN_PARTITION_SIZE=y" >> ncs/nrf/samples/nrf9160/at_client/prj.conf
+      - run: echo "SPM_MIN_PARTITION_SIZE=y" >> nrf/samples/nrf9160/at_client/prj.conf
       - name: Build AT client sample
         run: |
           docker run --rm -v ${PWD}/nrf:/workdir/ncs/nrf \
