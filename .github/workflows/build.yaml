@@ -17,19 +17,19 @@ jobs:
       matrix:
         board: [thingy91_nrf9160ns, nrf9160dk_nrf9160ns]
     steps:
-      - run: git clone --single-branch --branch v1.4-branch https://github.com/nrfconnect/sdk-nrf nrf
+      - run: git clone --single-branch --branch master https://github.com/nrfconnect/sdk-nrf nrf
       - run: mkdir build
-      - name: Build AT client sample
+      - name: Build AT host sample
         run: |
           docker run --rm -v ${PWD}/nrf:/workdir/ncs/nrf \
             coderbyheart/fw-nrfconnect-nrf-docker \
-            /bin/bash -c 'cd ncs/nrf/samples/nrf9160/at_client && west update && west build -p always -b ${{ matrix.board }}'
-          cp nrf/samples/nrf9160/at_client/build/zephyr/merged.hex build/at_client-${{ matrix.board }}.hex
+            /bin/bash -c 'cd ncs/nrf/samples/nrf9160/at_host && west update && west build -p always -b ${{ matrix.board }}'
+          cp nrf/samples/nrf9160/at_host/build/zephyr/merged.hex build/at_host-${{ matrix.board }}.hex
       - uses: actions/upload-artifact@v2
         with:
-          name: at_client-${{ matrix.board }}-${{ github.sha }}
+          name: at_host-${{ matrix.board }}-${{ github.sha }}
           path: |
-            build/at_client-*.hex
+            build/at_host-*.hex
 
   publish:
     needs: [build]
@@ -42,7 +42,7 @@ jobs:
           git config --global user.email "actions@example.com"
           git config --global user.name "GitHub Actions"
           mkdir public
-          cp -v at_client-*/* public
+          cp -v at_host-*/* public
           cd public
           touch .nojekyll
           git init
