@@ -17,12 +17,12 @@ jobs:
       matrix:
         board: [thingy91_nrf9160ns, nrf9160dk_nrf9160ns]
     steps:
-      - run: git clone --single-branch --branch master https://github.com/nrfconnect/sdk-nrf nrf
+      - run: git clone --single-branch --branch main https://github.com/nrfconnect/sdk-nrf nrf
       - run: mkdir build
       - name: Build AT host sample
         run: |
           docker run --rm -v ${PWD}/nrf:/workdir/ncs/nrf \
-            coderbyheart/fw-nrfconnect-nrf-docker \
+            coderbyheart/fw-nrfconnect-nrf-docker:main \
             /bin/bash -c 'cd ncs/nrf/samples/nrf9160/at_client && west update && west build -p always -b ${{ matrix.board }}'
           cp nrf/samples/nrf9160/at_client/build/zephyr/merged.hex build/at_host-${{ matrix.board }}.hex
       - uses: actions/upload-artifact@v2
