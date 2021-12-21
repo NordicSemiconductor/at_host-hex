@@ -2,8 +2,8 @@ name: Build
 
 on:
   push:
-    branches:
-      - saga
+    branches-ignore:
+      - gh-pages
   schedule:
     - cron: "0 0 * * *"
 
@@ -37,6 +37,7 @@ jobs:
   publish:
     needs: [build]
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/saga'
     steps:
       - uses: actions/download-artifact@v2
       - name: Publish HEX files
