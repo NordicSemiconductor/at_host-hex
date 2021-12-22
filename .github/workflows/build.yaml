@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        board: [thingy91_nrf9160ns, nrf9160dk_nrf9160ns]
+        board: [thingy91_nrf9160_ns, nrf9160dk_nrf9160_ns]
     steps:
       - name: Build AT host sample
         run: |
