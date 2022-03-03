@@ -28,7 +28,7 @@ jobs:
             west build -p always -b ${{ matrix.board }}'
           ls -la nrf/samples/nrf9160/at_client/build/zephyr/merged.hex
           cp nrf/samples/nrf9160/at_client/build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: at_host-${{ matrix.board }}-${{ github.sha }}
           path: |
