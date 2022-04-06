@@ -21,7 +21,7 @@ jobs:
         run: |
           docker run --rm -v ${PWD}:/workdir/project \
             -w /workdir/project \
-            coderbyheart/fw-nrfconnect-nrf-docker:main /bin/bash -c '\
+            nrfassettracker/nrfconnect-sdk:main /bin/bash -c '\
             west init -m https://github.com/nrfconnect/sdk-nrf --mr main && \
             west update --narrow -o=--depth=1 && \
             cd nrf/samples/nrf9160/at_client && \
