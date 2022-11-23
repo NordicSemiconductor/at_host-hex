@@ -19,15 +19,12 @@ jobs:
     steps:
       - name: Build AT host sample
         run: |
-          docker run --rm -v ${PWD}:/workdir/project \
-            -w /workdir/project \
-            nordicplayground/nrfconnect-sdk:main /bin/bash -c '\
-            west init -m https://github.com/nrfconnect/sdk-nrf --mr main && \
-            west update --narrow -o=--depth=1 && \
-            cd nrf/samples/nrf9160/at_client && \
-            west build -p always -b ${{ matrix.board }}'
-          ls -la nrf/samples/nrf9160/at_client/build/zephyr/merged.hex
-          cp nrf/samples/nrf9160/at_client/build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
+          docker run --rm \
+            -v ${PWD}:/workdir/project \
+            -w /workdir/nrf/samples/nrf9160/at_client \
+            nordicplayground/nrfconnect-sdk:main \
+            west build -p always -b ${{ matrix.board }} --build-dir /workdir/project/build
+          cp build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
       - uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
