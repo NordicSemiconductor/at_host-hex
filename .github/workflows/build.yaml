@@ -30,6 +30,7 @@ jobs:
           cp nrf/samples/nrf9160/at_client/build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
       - uses: actions/upload-artifact@v3
         with:
+          if-no-files-found: error
           name: at_host-${{ matrix.board }}-${{ github.sha }}
           path: |
             at_host-*.hex
