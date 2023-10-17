@@ -1,7 +1,7 @@
 {
   "name": "@nordicsemiconductor/at_host-hex",
   "version": "0.0.0-development",
-  "description": "Compiles the AT host sample for 9160DK and Thingy:91 and publishes it regularly.",
+  "description": "Compiles the AT host sample for 9161DK, 9160DK, and Thingy:91 and publishes it regularly.",
   "repository": {
     "type": "git",
     "url": "https://github.com/NordicSemiconductor/at_host-hex.git"
@@ -15,6 +15,7 @@
     "iot",
     "firmware",
     "nrf-connect-sdk",
+    "nrf9161",
     "nrf9160",
     "thingy91"
   ],
