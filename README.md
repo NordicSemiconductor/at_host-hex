@@ -6,3 +6,4 @@ Compiles the [AT host sample](https://developer.nordicsemi.com/nRF_Connect_SDK/d
 
 - [`thingy91_nrf9160_ns`](https://nordicsemiconductor.github.io/at_host-hex/at_host-thingy91_nrf9160_ns.hex)
 - [`nrf9160dk_nrf9160_ns`](https://nordicsemiconductor.github.io/at_host-hex/at_host-nrf9160dk_nrf9160_ns.hex)
+- [`nrf9161dk_nrf9161_ns`](https://nordicsemiconductor.github.io/at_host-hex/at_host-nrf9161dk_nrf9161_ns.hex)

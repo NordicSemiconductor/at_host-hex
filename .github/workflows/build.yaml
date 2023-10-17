@@ -15,7 +15,10 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        board: [thingy91_nrf9160_ns, nrf9160dk_nrf9160_ns]
+        board:
+          - thingy91_nrf9160_ns
+          - nrf9160dk_nrf9160_ns
+          - nrf9161dk_nrf9161_ns
     steps:
       - name: Build AT host sample
         run: |
