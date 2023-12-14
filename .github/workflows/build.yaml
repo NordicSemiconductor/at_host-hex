@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/saga'
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
       - name: Publish HEX files
         run: |
           echo "machine github.com login accesskey password ${GITHUB_TOKEN}" > ~/.netrc
