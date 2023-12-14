@@ -28,7 +28,7 @@ jobs:
             nordicplayground/nrfconnect-sdk:main \
             west build -p always -b ${{ matrix.board }} --build-dir /workdir/project/build
           cp build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
           name: at_host-${{ matrix.board }}-${{ github.sha }}
