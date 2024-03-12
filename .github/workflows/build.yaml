@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         board:
+          - thingy91x_nrf9151_ns
           - thingy91_nrf9160_ns
           - nrf9160dk_nrf9160_ns
           - nrf9161dk_nrf9161_ns
