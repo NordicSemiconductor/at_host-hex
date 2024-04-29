@@ -39,7 +39,7 @@ jobs:
       - name: Get Current checksum
         id: current-checksum
         run: |
-          CHECKSUM=$(curl https://nordicsemiconductor.github.io/at_host-hex/at_host-${{ matrix.board }}.elf.sha512sum)
+          CHECKSUM=$(curl -q --fail https://nordicsemiconductor.github.io/at_host-hex/at_host-${{ matrix.board }}.elf.sha512sum)
           echo "checksum=${CHECKSUM}" >> $GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
