@@ -32,13 +32,13 @@ jobs:
 
       - name: Calculate new checksum
         id: new-checksum
-        continue-on-error: true
         run: |
           sha512sum build/zephyr/zephyr.elf | cut -d " " -f 1 | tr -d '\n' > at_host-${{ matrix.board }}.elf.sha512sum
           echo "checksum=`cat at_host-${{ matrix.board }}.elf.sha512sum`" >> $GITHUB_OUTPUT
 
       - name: Get Current checksum
         id: current-checksum
+        continue-on-error: true
         run: |
           CHECKSUM=$(curl -q --fail https://nordicsemiconductor.github.io/at_host-hex/at_host-${{ matrix.board }}.elf.sha512sum)
           echo "checksum=${CHECKSUM}" >> $GITHUB_OUTPUT
