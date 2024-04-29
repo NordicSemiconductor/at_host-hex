@@ -29,13 +29,27 @@ jobs:
             nordicplayground/nrfconnect-sdk:main \
             west build -p always -b ${{ matrix.board }} --build-dir /workdir/project/build
           cp build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
-      - run: sha512sum at_host-${{ matrix.board }}.hex
+
+      - name: Calculate new checksum
+        id: new-checksum
+        run: |
+          sha512sum build/zephyr/zephyr.elf | cut -d " " -f 1 | tr -d '\n' > at_host-${{ matrix.board }}.elf.sha512sum
+          echo "checksum=`cat at_host-${{ matrix.board }}.elf.sha512sum`" >> $GITHUB_OUTPUT
+
+      - name: Get Current checksum
+        id: current-checksum
+        run: |
+          CHECKSUM=$(curl https://nordicsemiconductor.github.io/at_host-hex/at_host-${{ matrix.board }}.elf.sha512sum)
+          echo "checksum=${CHECKSUM}" >> $GITHUB_OUTPUT
+
       - uses: actions/upload-artifact@v4
+        if: steps.new-checksum.outputs.checksum != steps.current-checksum.outputs.checksum
         with:
           if-no-files-found: error
           name: at_host-${{ matrix.board }}-${{ github.sha }}
           path: |
             at_host-*.hex
+            at_host-*.elf.sha512sum
 
   publish:
     needs: [build]
