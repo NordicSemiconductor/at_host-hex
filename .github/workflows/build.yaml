@@ -30,6 +30,9 @@ jobs:
             west build -p always -b ${{ matrix.board }} --build-dir /workdir/project/build
           cp build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
 
+      # Ensure that the new build actually contains updated code,
+      # otherwise do not push a new release for this HEX file
+
       - name: Calculate new checksum
         id: new-checksum
         run: |
