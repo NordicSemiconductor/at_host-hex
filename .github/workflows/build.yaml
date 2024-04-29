@@ -70,5 +70,6 @@ jobs:
           for folder in $(find ./ -type d -name 'at_host-*'); do cp ./${folder}/* public; done
           cd public
           git add -A
+          if git diff-index --quiet HEAD --; then echo "Nothing changed."; exit 0; fi
           git commit -m "Update HEX files"
           git push -f origin HEAD:gh-pages
