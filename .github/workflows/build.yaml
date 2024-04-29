@@ -67,7 +67,7 @@ jobs:
           git config --global user.email "actions@example.com"
           git config --global user.name "github-actions[bot]"
           git clone https://github.com/${GITHUB_REPOSITORY}.git --branch gh-pages public
-          cp -v at_host-*/* public
+          find ./ -type f -name at_host-\* | xargs -I@ cp @ public
           cd public
           git add -A
           git commit -m "Update HEX files"
