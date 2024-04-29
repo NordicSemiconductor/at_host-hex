@@ -32,6 +32,7 @@ jobs:
 
       - name: Calculate new checksum
         id: new-checksum
+        continue-on-error: true
         run: |
           sha512sum build/zephyr/zephyr.elf | cut -d " " -f 1 | tr -d '\n' > at_host-${{ matrix.board }}.elf.sha512sum
           echo "checksum=`cat at_host-${{ matrix.board }}.elf.sha512sum`" >> $GITHUB_OUTPUT
@@ -43,7 +44,7 @@ jobs:
           echo "checksum=${CHECKSUM}" >> $GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
-        if: steps.new-checksum.outputs.checksum != steps.current-checksum.outputs.checksum
+        if: steps.current-checksum.outcome == 'failure' || steps.new-checksum.outputs.checksum != steps.current-checksum.outputs.checksum
         with:
           if-no-files-found: error
           name: at_host-${{ matrix.board }}-${{ github.sha }}
@@ -62,12 +63,9 @@ jobs:
           echo "machine github.com login accesskey password ${GITHUB_TOKEN}" > ~/.netrc
           git config --global user.email "actions@example.com"
           git config --global user.name "github-actions[bot]"
-          mkdir public
+          git clone https://github.com/${GITHUB_REPOSITORY}.git --branch gh-pages public
           cp -v at_host-*/* public
           cd public
-          touch .nojekyll
-          git init
           git add -A
           git commit -m "Update HEX files"
-          git remote add origin https://github.com/${GITHUB_REPOSITORY}.git
           git push -f origin HEAD:gh-pages
