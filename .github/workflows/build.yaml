@@ -16,19 +16,24 @@ jobs:
     strategy:
       matrix:
         board:
-          - thingy91x
-          - thingy91
-          - nrf9160dk
-          - nrf9161dk
+          - thingy91x/nrf9151/ns
+          - thingy91/nrf9160/ns
+          - nrf9160dk/nrf9160/ns
+          - nrf9161dk/nrf9161/ns
     steps:
+      - run: |
+          BOARD="${{ matrix.board }}"
+          NAME=${BOARD//\//_}  # Replace "/" with "_"
+          echo "NAME=${NAME}" >> $GITHUB_ENV
+
       - name: Build AT host sample
         run: |
           docker run --rm \
             -v ${PWD}:/workdir/project \
             -w /workdir/nrf/samples/cellular/at_client \
             nordicplayground/nrfconnect-sdk:main \
-            west build -p always -b ${{ matrix.board }}/ns --build-dir /workdir/project/build
-          cp build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
+            west build -p always -b ${{ matrix.board }} --build-dir /workdir/project/build
+          cp build/zephyr/merged.hex at_host-${{ env.NAME }}.hex
 
       # Ensure that the new build actually contains updated code,
       # otherwise do not push a new release for this HEX file
@@ -36,21 +41,21 @@ jobs:
       - name: Calculate new checksum
         id: new-checksum
         run: |
-          sha512sum build/zephyr/zephyr.elf | cut -d " " -f 1 | tr -d '\n' > at_host-${{ matrix.board }}.elf.sha512sum
-          echo "checksum=`cat at_host-${{ matrix.board }}.elf.sha512sum`" >> $GITHUB_OUTPUT
+          sha512sum build/zephyr/zephyr.elf | cut -d " " -f 1 | tr -d '\n' > at_host-${{ env.NAME }}.elf.sha512sum
+          echo "checksum=`cat at_host-${{ env.NAME }}.elf.sha512sum`" >> $GITHUB_OUTPUT
 
       - name: Get Current checksum
         id: current-checksum
         continue-on-error: true
         run: |
-          CHECKSUM=$(curl -q --fail https://nordicsemiconductor.github.io/at_host-hex/at_host-${{ matrix.board }}.elf.sha512sum)
+          CHECKSUM=$(curl -q --fail https://nordicsemiconductor.github.io/at_host-hex/at_host-${{ env.NAME }}.elf.sha512sum)
           echo "checksum=${CHECKSUM}" >> $GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
         if: steps.current-checksum.outcome == 'failure' || steps.new-checksum.outputs.checksum != steps.current-checksum.outputs.checksum
         with:
           if-no-files-found: error
-          name: at_host-${{ matrix.board }}-${{ github.sha }}
+          name: at_host-${{ env.NAME }}-${{ github.sha }}
           path: |
             at_host-*.hex
             at_host-*.elf.sha512sum
