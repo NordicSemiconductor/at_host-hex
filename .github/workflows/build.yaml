@@ -27,7 +27,7 @@ jobs:
             -v ${PWD}:/workdir/project \
             -w /workdir/nrf/samples/cellular/at_client \
             nordicplayground/nrfconnect-sdk:main \
-            west build -p always -b ${{ matrix.board }} --build-dir /workdir/project/build
+            west build -p always -b ${{ matrix.board }}/ns --build-dir /workdir/project/build
           cp build/zephyr/merged.hex at_host-${{ matrix.board }}.hex
 
       # Ensure that the new build actually contains updated code,
