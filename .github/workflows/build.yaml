@@ -33,7 +33,7 @@ jobs:
             -w /workdir/nrf/samples/cellular/at_client \
             nordicplayground/nrfconnect-sdk:main \
             west build -p always -b ${{ matrix.board }} --build-dir /workdir/project/build
-          cp build/zephyr/merged.hex at_host-${{ env.NAME }}.hex
+          cp build/merged.hex at_host-${{ env.NAME }}.hex
 
       # Ensure that the new build actually contains updated code,
       # otherwise do not push a new release for this HEX file
