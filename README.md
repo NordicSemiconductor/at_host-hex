@@ -1,3 +1,7 @@
+> [!NOTE]  
+>
+> This repository has been archived, because [it is considered feature-complete](https://github.com/NordicSemiconductor/asset-tracker-cloud-docs/discussions/1068). ✔️ 
+
 # AT host sample
 
 ![Build and Release](https://github.com/NordicSemiconductor/at_host-hex/workflows/Build/badge.svg?branch=saga)
